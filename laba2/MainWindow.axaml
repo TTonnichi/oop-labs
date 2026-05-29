@@ -1,0 +1,250 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:models="using:Laba2App.Models"
+        mc:Ignorable="d"
+        x:Class="Laba2App.Views.MainWindow"
+        Title="Coffee Shop"
+        Width="1100"
+        Height="768"
+        Background="#1E1E24"
+        FontFamily="Segoe UI Variable Display"
+        FontSize="17">
+
+    <Grid RowDefinitions="Auto,*"
+          Margin="24">
+
+        <!-- заголовок -->
+
+        <TextBlock Text="coffee shop manager"
+                   FontSize="34"
+                   FontWeight="SemiBold"
+                   Foreground="#EAEAEA"
+                   Margin="0,0,0,20"/>
+
+        <!-- основная область -->
+
+        <Grid Grid.Row="1"
+              ColumnDefinitions="2*,1*"
+              ColumnSpacing="20">
+
+            <!-- таблица -->
+
+            <Border Background="#2A2A33"
+                    CornerRadius="14"
+                    Padding="12">
+
+                <DataGrid Name="MyGrid"
+                          x:DataType="models:Drink"
+
+                          AutoGenerateColumns="False"
+                          IsReadOnly="True"
+
+                          CanUserResizeColumns="True"
+
+                          GridLinesVisibility="Horizontal"
+
+                          Background="Transparent"
+                          Foreground="#EAEAEA"
+
+                          FontSize="14"
+                          RowBackground="Transparent">
+
+                    <DataGrid.Columns>
+
+                        <DataGridTextColumn Header="Id"
+                                            Binding="{Binding Id}"
+                                            Width="60"/>
+
+                        <DataGridTextColumn Header="Type"
+                                            Binding="{Binding Type}"
+                                            Width="100"/>
+
+                        <DataGridTextColumn Header="Name"
+                                            Binding="{Binding Name}"
+                                            Width="140"/>
+
+                        <DataGridTextColumn Header="Volume"
+                                            Binding="{Binding Volume}"
+                                            Width="80"/>
+
+                        <DataGridTextColumn Header="Price"
+                                            Binding="{Binding Price}"
+                                            Width="80"/>
+
+                        <DataGridTextColumn Header="Extra"
+                                            Binding="{Binding ExtraInfo}"
+                                            Width="140"/>
+
+                        <DataGridTextColumn Header="Info"
+                                            Binding="{Binding InfoText}"
+                                            Width="*"/>
+
+                    </DataGrid.Columns>
+
+                </DataGrid>
+
+            </Border>
+
+            <!-- панель управления -->
+
+            <Border Grid.Column="1"
+                    Background="#2A2A33"
+                    CornerRadius="14"
+                    Padding="16">
+
+                <StackPanel Spacing="8">
+
+                    <TextBlock Text="add drink"
+                               FontSize="22"
+                               FontWeight="SemiBold"
+                               Foreground="#EAEAEA"/>
+
+                    <!-- выбор типа -->
+
+                    <ComboBox x:Name="TypeComboBox"
+                              SelectedIndex="0"
+                              SelectionChanged="OnTypeChanged"
+                              Background="#3A3A44"
+                              Foreground="#EAEAEA">
+
+                        <ComboBoxItem Content="Coffee"/>
+                        <ComboBoxItem Content="Tea"/>
+
+                    </ComboBox>
+
+                    <!-- общие поля -->
+
+                    <TextBox x:Name="NameTextBox"
+                             PlaceholderText="name"
+                             Background="#3A3A44"
+                             Foreground="#EAEAEA"/>
+
+                    <TextBox x:Name="VolumeTextBox"
+                             PlaceholderText="volume"
+                             Background="#3A3A44"
+                             Foreground="#EAEAEA"
+                             KeyDown="OnlyNumbersKeyDown"/>
+
+                    <TextBox x:Name="PriceTextBox"
+                             PlaceholderText="price"
+                             Background="#3A3A44"
+                             Foreground="#EAEAEA"
+                             KeyDown="OnlyNumbersKeyDown"/>
+
+                    <!-- параметры кофе -->
+
+                    <TextBox x:Name="StrengthTextBox"
+                             PlaceholderText="strength (1-5)"
+                             Background="#3A3A44"
+                             Foreground="#EAEAEA"/>
+
+                    <!-- параметры чая -->
+
+                    <ComboBox x:Name="TeaTypeComboBox"
+                              SelectedIndex="0"
+                              Background="#3A3A44"
+                              Foreground="#EAEAEA">
+
+                        <ComboBoxItem Content="black"/>
+                        <ComboBoxItem Content="green"/>
+                        <ComboBoxItem Content="herbal"/>
+
+                    </ComboBox>
+
+                    <!-- кнопки -->
+
+                    <WrapPanel Margin="0,10,0,0">
+
+                        <Button x:Name="AddButton"
+                                Content="Add"
+                                Click="OnAddClick"
+                                Background="#3B3B46"
+                                Foreground="#EAEAEA"
+                                Padding="10,6"
+                                Margin="0,0,6,6"/>
+
+                        <Button Content="Edit"
+                                Click="OnEditClick"
+                                Background="#3B3B46"
+                                Foreground="#EAEAEA"
+                                Padding="10,6"
+                                Margin="0,0,6,6"/>
+
+                        <Button Content="Delete"
+                                Click="OnDeleteClick"
+                                Background="#3B3B46"
+                                Foreground="#EAEAEA"
+                                Padding="10,6"
+                                Margin="0,0,6,6"/>
+
+                        <Button Content="Copy"
+                                Click="OnDuplicateClick"
+                                Background="#3B3B46"
+                                Foreground="#EAEAEA"
+                                Padding="10,6"
+                                Margin="0,0,6,6"/>
+
+                        <Button Content="Refresh"
+                                Click="OnRefreshClick"
+                                Background="#3B3B46"
+                                Foreground="#EAEAEA"
+                                Padding="10,6"
+                                Margin="0,0,6,6"/>
+
+                    </WrapPanel>
+
+                    <!-- дополнительные действия -->
+
+                    <WrapPanel>
+
+                        <Button x:Name="AddExtraButton"
+                                Content="Add extra"
+                                Click="OnAddExtraClick"
+                                Background="#4A4A58"
+                                Foreground="#FFD700"
+                                Padding="10,6"
+                                Margin="0,0,6,6"/>
+
+                        <Button x:Name="RemoveExtraButton"
+                                Content="Remove extra"
+                                Click="OnRemoveExtraClick"
+                                Background="#4A4A58"
+                                Foreground="#FFD700"
+                                Padding="10,6"
+                                Margin="0,0,6,6"/>
+
+                        <Button Content="Show wishes"
+                                Click="OnWishClick"
+                                Background="#2D5A27"
+                                Foreground="White"
+                                Padding="10,6"
+                                Margin="0,0,6,6"/>
+
+                        <Button Content="Full info"
+                                Click="OnInfoClick"
+                                Background="#5A3A6E"
+                                Foreground="#FFD700"
+                                Padding="10,6"
+                                Margin="0,0,6,6"/>
+
+                        <Button x:Name="CancelButton"
+                                Content="Cancel"
+                                Click="OnCancelEditClick"
+                                Background="#3B3B46"
+                                Foreground="#EAEAEA"
+                                Padding="10,6"
+                                Margin="0,0,6,6"/>
+
+                    </WrapPanel>
+
+                </StackPanel>
+
+            </Border>
+
+        </Grid>
+
+    </Grid>
+
+</Window>
